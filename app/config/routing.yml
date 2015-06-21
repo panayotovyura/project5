@@ -1,3 +1,4 @@
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation
+repos:
+    type:     rest
+    resource: Levi9\RESTfulBundle\Controller\ApiVersion1Controller
+    prefix: v1

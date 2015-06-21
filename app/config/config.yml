@@ -73,3 +73,14 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+guzzle:
+    base_url: "https://api.github.com"
+
+    # custom headers
+    headers:
+        Accept: "application/json"
+
+fos_rest:
+    routing_loader:
+        default_format: json
