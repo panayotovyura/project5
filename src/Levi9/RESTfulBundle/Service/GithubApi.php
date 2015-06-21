@@ -4,6 +4,7 @@ namespace Levi9\RESTfulBundle\Service;
 
 use GuzzleHttp\Client;
 use JMS\Serializer\Serializer;
+use Levi9\RESTfulBundle\Entity\Repo;
 
 class GithubApi
 {
@@ -30,18 +31,36 @@ class GithubApi
         $this->serializer = $serializer;
     }
 
-    public function getReposList($page = self::DEFAULT_PAGE, $per_page = self::DEFAULT_PER_PAGE)
-    {
-        $response = $this->client->get(self::GET_REPOS_LIST_METHOD);
+    /**
+     * Get repositories list from GitHub api.
+     *
+     * @param int $page
+     * @param int $perPage
+     * @return Repo[]
+     */
+    public function getReposList(
+        $page = self::DEFAULT_PAGE,
+        $perPage = self::DEFAULT_PER_PAGE
+    ) {
+        $repos = [];
 
-        return array_slice(
-            $this->serializer->deserialize(
-                $response->getBody()->getContents(),
-                'array<'.self::REPO_ENTITY.'>',
-                self::JSON_TYPE
-            ),
-            --$page*$per_page,
-            $per_page
-        );
+        try {
+            $response = $this->client->get(self::GET_REPOS_LIST_METHOD);
+
+            $repos = array_slice(
+                $this->serializer->deserialize(
+                    $response->getBody()->getContents(),
+                    'array<'.self::REPO_ENTITY.'>',
+                    self::JSON_TYPE
+                ),
+                --$page*$perPage,
+                $perPage
+            );
+
+        } catch (\Exception $exception) {
+            // log error
+        }
+
+        return $repos;
     }
 }

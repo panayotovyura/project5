@@ -9,6 +9,12 @@ use Levi9\RESTfulBundle\Service\GithubApi;
 
 class ApiVersion1Controller extends FOSRestController
 {
+    /**
+     * Get repositories list from GitHub api action.
+     *
+     * @param Request $request
+     * @return Response
+     */
     public function getReposAction(Request $request)
     {
         $view = $this->view(

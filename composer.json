@@ -30,7 +30,10 @@
         "eightpoints/guzzle-bundle": "^3.0"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~2.3"
+        "sensio/generator-bundle": "~2.3",
+        "squizlabs/php_codesniffer": "2.*",
+        "phpmd/phpmd": "@stable",
+        "sebastian/phpcpd": "*"
     },
     "scripts": {
         "post-root-package-install": [
