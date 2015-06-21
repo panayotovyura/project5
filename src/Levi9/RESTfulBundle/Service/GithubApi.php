@@ -9,6 +9,7 @@ use Levi9\RESTfulBundle\Entity\Repo;
 class GithubApi
 {
     const GET_REPOS_LIST_METHOD = '/users/panayotovyura/repos';
+    const GET_REPO_METHOD = '/repos/panayotovyura/%s';
     const JSON_TYPE = 'json';
     const REPO_ENTITY = 'Levi9\RESTfulBundle\Entity\Repo';
 
@@ -62,5 +63,35 @@ class GithubApi
         }
 
         return $repos;
+    }
+
+    /**
+     * Get repository from GitHub by name.
+     *
+     * @param $name
+     * @return Repo|null
+     */
+    public function getRepo($name)
+    {
+        $repo = null;
+
+        try {
+            $response = $this->client->get($this->getRepoUri($name));
+
+            $repo = $this->serializer->deserialize(
+                $response->getBody()->getContents(),
+                self::REPO_ENTITY,
+                self::JSON_TYPE
+            );
+        } catch (\Exception $exception) {
+            // log error
+        }
+
+        return $repo;
+    }
+
+    protected function getRepoUri($name)
+    {
+        return sprintf(self::GET_REPO_METHOD, $name);
     }
 }

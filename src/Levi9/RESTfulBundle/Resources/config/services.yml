@@ -1,7 +1,7 @@
 services:
-#    levi9_res_tful.example:
-#        class: Levi9\RESTfulBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
     levi9_restful.github_api:
         class: Levi9\RESTfulBundle\Service\GithubApi
         arguments: [@guzzle.client, @jms_serializer]
+    levi9_restful.comment:
+        class: Levi9\RESTfulBundle\Service\Comment
+        arguments: [@doctrine.orm.entity_manager]
